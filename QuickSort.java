@@ -1,37 +1,59 @@
+public class QuickSortOnStrings {
 
-package Program;
-import java.util.Scanner;
-public class QuickSort
-{
-    public static void main(String[] args)
-    {
-        int n;
-        String temp;
-        Scanner sc = new Scanner(System.in);
-        Scanner s1 = new Scanner(System.in);
-        System.out.print("Enter number of names:");
-        n = sc.nextInt();
-        String names[] = new String[n];
-        for(int i = 0; i < n; i++)
-        {
-            System.out.println("Enter name "+(i+1)+":");
-            names[i] = s1.nextLine();
+    String names[];
+    int length;
+
+    public static void main(String[] args) {
+        QuickSortOnStrings obj = new QuickSortOnStrings();
+        String stringsList[] = {"raja", "gouthu", "rani", "gouthami", "honey", "heyaansh", "hello"};
+        obj.sort(stringsList);
+
+        for (String i : stringsList) {
+            System.out.print(i);
+            System.out.print(" ");
         }
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = i + 1; j < n; j++)
-            {
-                if (names[i].compareTo(names[j])>0)
-                {
-                    temp = names[i];
-                    names[i] = names[j];
-                    names[j] = temp;
-                }
+    }
+
+    void sort(String array[]) {
+        if (array == null || array.length == 0) {
+            return;
+        }
+        this.names = array;
+        this.length = array.length;
+        quickSort(0, length - 1);
+    }
+
+    void quickSort(int lowerIndex, int higherIndex) {
+        int i = lowerIndex;
+        int j = higherIndex;
+        String pivot = this.names[lowerIndex + (higherIndex - lowerIndex) / 2];
+
+        while (i <= j) {
+            while (this.names[i].compareToIgnoreCase(pivot) < 0) {
+                i++;
+            }
+
+            while (this.names[j].compareToIgnoreCase(pivot) > 0) {
+                j--;
+            }
+
+            if (i <= j) {
+                exchangeNames(i, j);
+                i++;
+                j--;
             }
         }
-        System.out.print("Names in Sorted Order:");
-        for (int i = 0; i < n - 1; i++)
-            System.out.print(names[i] + ",");
-        System.out.print(names[n - 1]);
+        if (lowerIndex < j) {
+            quickSort(lowerIndex, j);
+        }
+        if (i < higherIndex) {
+            quickSort(i, higherIndex);
+        }
+    }
+
+    void exchangeNames(int i, int j) {
+        String temp = this.names[i];
+        this.names[i] = this.names[j];
+        this.names[j] = temp;
     }
 }
